@@ -1,0 +1,15 @@
+# Virtual environments (just in case)
+myVenv/
+venv/
+.venv/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Local database and environment secrets
+db.sqlite3
+.env
+
+# IDE files
+.vscode/

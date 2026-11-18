@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}CollectFees | DjangoApp {% endblock %}
+
+{% block content %}
+
+<div class="fees-container">
+    <!-- Left Side: Saare Students ki List -->
+    <div class="student-list-panel">
+        <h2>All Students</h2>
+        <p class="subtitle">Select a student to collect fees</p>
+        
+        <div class="student-list">
+            {% for student in students %}
+                <a href="?student_id={{ student.id }}" 
+                   class="student-item {% if selected_student.id == student.id %}active{% endif %}">
+                    <div class="student-avatar">{{ student.first_name|first }}{{ student.last_name|first }}</div>
+                    <div class="student-info">
+                        <h4>{{ student.first_name }} {{ student.last_name }}</h4>
+                        <span>{{ student.course }}</span>
+                    </div>
+                </a>
+            {% empty %}
+                <p class="no-data">No students found. Please add students first.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Right Side: Student Details & Installments -->
+    <div class="fees-detail-panel">
+        {% if selected_student %}
+            <div class="student-card">
+                <div class="card-header">
+                    <h2>Student Details</h2>
+                    <span class="badge">{{ selected_student.course }}</span>
+                </div>
+                <div class="details-grid">
+                    <div><strong>Name:</strong> {{ selected_student.first_name }} {{ selected_student.last_name }}</div>
+                    <div><strong>Age:</strong> {{ selected_student.age }}</div>
+                    <div><strong>Mobile:</strong> {{ selected_student.mobile }}</div>
+                    <div><strong>Email:</strong> {{ selected_student.email }}</div>
+                    <div><strong>Total Course Fees:</strong> ₹{{ selected_student.total_fees }}</div>
+                </div>
+            </div>
+
+            <!-- Installments Form -->
+            <form method="POST" class="installment-form">
+                {% csrf_token %}
+                <input type="hidden" name="student_id" value="{{ selected_student.id }}">
+                
+                <h3>Fee Installments (₹2,000 per installment)</h3>
+                
+                <div class="installments-grid">
+                    {% for inst in installments_list %}
+                        <label class="installment-box {% if inst.is_paid %}paid-box{% endif %}">
+                            <input type="checkbox" 
+                                   name="installment_check" 
+                                   value="{{ inst.number }}"
+                                   class="inst-checkbox"
+                                   {% if inst.is_paid %}checked onclick="return false;"{% endif %}>
+                            
+                            <div class="inst-details">
+                                <span class="inst-title">Installment {{ inst.number }}</span>
+                                <span class="inst-amount">₹{{ inst.amount }}</span>
+                            </div>
+
+                            <!-- Green Tick Indicator -->
+                            <span class="green-tick">✅</span>
+                        </label>
+                    {% endfor %}
+                </div>
+
+                <div class="action-buttons">
+                    <button type="submit" class="btn-save-receipt">Save & Generate Receipt</button>
+                    <button type="submit" name="reset_fees" value="1" class="btn btn-danger m-1" onclick="return confirm('Are you sure you want to reset all paid fees for this student?');">Reset Fees
+                    </button>
+                </div>
+                <div class="action-buttons">
+                    <a href="{% url 'dashboard' %}"><button type="button" class="bg-primary m-1 text-light text-center">Go-Back</button></a>
+                </div>
+            </form>
+        {% else %}
+            <div class="empty-state">
+                <h3>👈 Please select a student from the left list</h3>
+                <p>Click on any student's name to view their details and manage fee installments.</p>
+            </div>
+            <div class="action-buttons">
+                <a href="{% url 'dashboard' %}"><button type="button" class="bg-primary m-1 text-light text-center">Go-Back</button></a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

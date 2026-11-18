@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %} Receipt  | DjangoApp{% endblock %}
+
+{% block content %}
+
+<div style="max-width: 600px; margin: 40px auto; padding: 30px; border: 2px solid #333; border-radius: 10px; font-family: Arial, sans-serif; background: #fff;">
+    {% if receipt %}
+        <div style="text-align: center; border-bottom: 2px dashed #ccc; padding-bottom: 15px; margin-bottom: 20px;">
+            <h1 style="margin: 0; color: #2c3e50;">FEE RECEIPT</h1>
+            <p style="margin: 5px 0; color: #7f8c8d;">Receipt No: <strong>{{ receipt.receipt_no }}</strong> | Date: {{ receipt.date }}</p>
+        </div>
+
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 16px;">
+            <tr>
+                <td style="padding: 8px 0;"><strong>Student Name:</strong></td>
+                <td style="text-align: right;">{{ receipt.name }}</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px 0;"><strong>Course:</strong></td>
+                <td style="text-align: right;">{{ receipt.course }}</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px 0;"><strong>Mobile:</strong></td>
+                <td style="text-align: right;">{{ receipt.mobile }}</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px 0;"><strong>Email:</strong></td>
+                <td style="text-align: right;">{{ receipt.email }}</td>
+            </tr>
+        </table>
+
+        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                <span>Total Course Fees:</span>
+                <strong>₹{{ receipt.total_fees }}</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px; color: #27ae60; font-size: 18px;">
+                <span>Amount Paid Now:</span>
+                <strong>₹{{ receipt.paid_now }}</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                <span>Total Fees Paid Till Date:</span>
+                <strong>₹{{ receipt.total_paid }}</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-top: 1px solid #ccc; padding-top: 8px; color: #e74c3c;">
+                <span>Remaining Balance:</span>
+                <strong>₹{{ receipt.remaining_fees }}</strong>
+            </div>
+        </div>
+
+        <div style="margin-top: 25px; display: flex; gap: 10px;">
+            <button onclick="window.print()" style="flex: 1; padding: 12px; background: #2196f3; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px;">Print Receipt</button>
+            <a href="{% url 'collectfees' %}" style="flex: 1; padding: 12px; background: #7f8c8d; color: white; text-align: center; text-decoration: none; border-radius: 6px; font-size: 16px;">Back to Collect Fees</a>
+        </div>
+    {% else %}
+        <p style="text-align: center;">No receipt generated yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

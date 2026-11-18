@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Add | DjangoApp{% endblock %}
+
+{% block content %}
+
+    <div class="main-container">
+        <div class="form-header">
+            <h1>Registration Form</h1>
+        </div>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-grid">
+                <div class="input-group">
+                    <label>Name : </label>
+                    <input type="text"placeholder= "Enter Your name" name = "fname" required>
+                </div>
+                <div class="input-group">
+                    <label>Last Name : </label>
+                    <input type="text"placeholder= "Enter Your lastname"  name = "lname"required>
+                </div>
+                <div class="input-group">
+                    <label>Age : </label>
+                    <input type="number"placeholder= "Enter Your age" min="1"  name = "age" required>
+                </div>
+                <div class="input-group">
+                    <label>Email : </label>
+                    <input type="email"placeholder= "Enter Your email"  name = "email" required>
+                </div>
+                <div class="input-group">
+                    <label for="course">Course : </label>
+                    <select name="course" id="course" required>
+                        <option value="" disabled selected>Select Your Course</option>
+                        <option value="BasicComputerCourse">Basic Computer Course</option>
+                        <option value="WebDevelopment">Web Development</option>
+                        <option value="WebDesigning">Web Designing</option>
+                        <option value="DigitalMarketing">Digital Marketing</option>
+                        <option value="GraphicDesigning">Graphic Designing</option>
+                        <option value="TallywithGST">Tally with GST</option>
+                        <option value="AdvancedExcel">Advanced Excel</option>
+                        <option value="ProgramminginPython">Programming in Python</option>
+                        <option value="JavaProgramming">Java Programming</option>
+                        <option value="FullStackDevelopment">Full Stack Development</option>
+                        <option value="DataEntry&Typing">Data Entry & Typing</option>
+                        <option value="ArtificialIntelligence(AI)">Artificial Intelligence (AI)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Mobile : </label>
+                    <input type="tel"placeholder= "Enter Your Mobile no."  name = "mobile" required>
+                </div>
+            </div>
+            <div class="button-group">
+                <button type="submit" class="submit-btn bg-primary">Submit Form</button>
+                <a href="{% url 'dashboard' %}">
+                    <button type="button"class="bg-primary p-3 text-light">Go-Back</button>
+                </a>
+            </div>
+        </form>
+    </div> 
+
+{% endblock %}

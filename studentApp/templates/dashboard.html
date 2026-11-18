@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard | DjangoApp{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <ul class="menu">
+            <li class="active">
+                <a href="{% url 'dashboard' %}">🏠 Dashboard</a>
+            </li>
+
+            
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="studentDropdown" role="button"data-bs-toggle="dropdown" aria-expanded="false">👨‍🎓 Student </a>
+
+                <ul class="dropdown-menu" aria-labelledby="studentDropdown">
+
+                    <li>
+                        <a class="dropdown-item text-dark" href="{% url 'add' %}">Add Student</a>
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item text-dark" href="{% url 'view' %}">View Student</a>
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item text-dark" href="{% url 'confirm_person' %}">Update Data</a>
+                    </li>
+
+                    <!-- <li>
+                        <a class="dropdown-item text-dark" href="#">Delete Student</a>
+                    </li> -->
+
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="studentDropdown" role="button"data-bs-toggle="dropdown" aria-expanded="false">💰 Fees Management </a>
+
+                <ul class="dropdown-menu" aria-labelledby="studentDropdown">
+
+                    <li>
+                        <a class="dropdown-item text-dark" href="{% url 'collectfees' %}">Collect Fees</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item text-dark" href="{% url 'recipt' %}">Fee Receipt</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Navbar -->
+        <header class="topbar">
+
+            <div>
+                <h2>StudentHub Dashboard</h2>
+                <p>Welcome to Student Management System</p>
+            </div>
+
+        </header>
+
+
+        <!-- Welcome Section -->
+        <section class="welcome">
+            <h2>Hello👋</h2>
+            <p>Here is what's happening in your institute today.</p>
+        </section>
+
+
+        <!-- Statistics Cards -->
+        <section class="cards">
+
+            <div class="card blue">
+                <div class="card-icon">👨‍🎓</div>
+                <h3>Total Students</h3>
+                <h1>{{total_students}}</h1>
+                <p>Registered Students</p>
+            </div>
+
+            <div class="card green">
+                <div class="card-icon">📚</div>
+                <h3>Total Courses</h3>
+                <h1>12</h1>
+                <p>Available Courses</p>
+                <li class="nav-item dropdown">
+                    <a href="#" class="text-light" role="button" data-bs-toggle="dropdown" aria-expanded="false">View All</a>
+                    <ul class="dropdown-menu" aria-labelledby="studentDropdown">
+                        <li><a class="dropdown-item text-dark course" href="#">Basic Computer Course</a></li>
+                        <li><a class="dropdown-item text-dark course" href="#">Web Development</a></li>
+                        <li><a class="dropdown-item text-dark course" href="#">Web Designing</a></li>
+                        <li><a class="dropdown-item text-dark course" href="#">Digital Marketing</a></li>
+                        <li><a class="dropdown-item text-dark course" href="#">Graphic Designing</a></li>
+                        <li><a class="dropdown-item text-dark course" href="#">Tally with GST</a></li>
+                        <li><a class="dropdown-item text-dark course" href="#">Advanced Excel</a></li>
+                        <li><a class="dropdown-item text-dark course" href="#">Programming in Python</a></li>
+                        <li><a class="dropdown-item text-dark course" href="#">Java Programming</a></li>
+                        <li><a class="dropdown-item text-dark course" href="#">Full Stack Development</a></li>
+                        <li><a class="dropdown-item text-dark course" href="#">Data Entry & Typing</a></li>
+                        <li><a class="dropdown-item text-dark course" href="#">Artificial Intelligence (AI)</a></li>
+                    </ul>
+                </li>
+            </div> 
+
+            <!-- <div class="card orange">
+                <div class="card-icon">💰</div>
+                <h3>Total Fees</h3>
+                <h1>₹5,00,000</h1>
+                <p>Fees Collected</p>
+            </div> -->
+
+            <!-- <div class="card red">
+                <div class="card-icon">⏳</div>
+                <h3>Pending Fees</h3>
+                <h1>₹75,000</h1>
+                <p>Fees Remaining</p>
+            </div> -->
+
+            <div class="card orange">
+                <div class="card-icon">💰</div>
+                <h3>Total Fees</h3>
+                <h1>₹{{ total_collected|floatformat:0}}</h1>
+                <p>Fees Collected</p>
+            </div>
+
+            <!-- Pending Fees Card -->
+            <div class="card red">
+                <div class="card-icon">⏳</div>
+                <h3>Pending Fees</h3>
+                <h1>₹{{ pending_fees|floatformat:0 }}</h1>
+                <p>Fees Remaining</p>
+            </div>
+
+
+        </section>
+    </main>
+
+</div>
+
+{% endblock %}
